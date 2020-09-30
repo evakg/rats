@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Place Searches</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+   <link rel="stylesheet" href="https://use.typekit.net/ach1ywa.css">
+   <link rel="stylesheet" media="screen" href="style.css">
+    <script src="script.js"></script>
+    <script src="draw.js"></script>
+    <script src="jquery-2.1.3.min.js"></script>
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMAzMKYVTYH1pMlTI0y_su0ndTNz7BO_Q&libraries=places"  ></script> 
+    <script>
+     
+      var map;
+      var infowindow;
+      var healthpoints;
+      var points = [];
+      var pos;
+
+
+      function initMap() {
+        var nyc = {lat: 40.7312261,lng: -73.9888796,};
+        map = new google.maps.Map(document.getElementById('map'), {
+        center: nyc,
+          zoom: 15,
+          streetViewControl: false,
+             mapTypeControl: false,
+          styles:[
+  {
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#212121"
+      }
+    ]
+  },
+  {
+    "elementType": "labels",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.icon",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#757575"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#212121"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#757575"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.country",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#9e9e9e"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.land_parcel",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.locality",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#bdbdbd"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.neighborhood",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#757575"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#181818"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#616161"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#1b1b1b"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#2c2c2c"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#8a8a8a"
+      }
+    ]
+  },
+  {
+    "featureType": "road.arterial",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#373737"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#3c3c3c"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway.controlled_access",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#4e4e4e"
+      }
+    ]
+  },
+  {
+    "featureType": "road.local",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#616161"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#757575"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#000000"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#3d3d3d"
+      }
+    ]
+  }
+],
+        });
+
+        infowindow = new google.maps.InfoWindow();
+        var service = new google.maps.places.PlacesService(map);
+        
+         if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } 
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } 
+
+        
+        service.textSearch({
+          location: nyc,
+          radius: 500,
+          query: ['avocado toast']
+        }, callback);
+        
+        // moved the API call to inside the init function, but after you make the query call to google. 
+        $("document").ready(function(){
+
+                  var data_url = "https://data.cityofnewyork.us/resource/9s4h-37hy.json?$$app_token=XdbygXwgUYakiJaBIVTuCsnql&$limit=500&ofns_desc=NEW%20YORK%20CITY%20HEALTH%20CODE";   
+     
+                  $.getJSON(data_url).done(function(prodData){
+
+                    // As long as the query is correct, you should get back and object (json) data you can use. 
+                    //Don't forget to use console.log ans the console in the inspector to  test your output and look for errors
+                    //console.log(prodData);
+
+                
+                   for(i=0; i<prodData.length;i++){
+                      //I took a random attribute from the object and displayed the in the console;take a look
+                 //  console.log(prodData[i].lat_lon.coordinates);
+                     points.push(prodData[i].lat_lon.coordinates)
+                   }
+                    
+                    for(i=0; i<points.length;i++){
+                            // createMarker(points[i])
+                           HealthCode(points[i]);
+                         // HealthCode();
+                      console.log(points[i]);
+                    }
+                   //console.log(points);
+                 
+            });
+
+        });
+     
+      }
+
+      function callback(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          for (var i = 0; i < results.length; i++) {
+            createMarker(results[i]);
+            //console.log("results: "+ results[i]);
+           
+          }
+        }
+        //dionMarker("blah");
+        //console.log(results);
+        
+      
+      }
+
+      function createMarker(place) {
+        var placeLoc = place.geometry.location;
+        var image = 'https://cdn.glitch.com/b6c89e66-5ba7-4a49-b861-222bba725f27%2Favo.png?1545068252155'
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location,
+          icon: image,
+          animation: google.maps.Animation.DROP,
+
+        });
+          //console.log(place);
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.setContent(place.name);
+          infowindow.open(map, this);
+        });
+      }
+      
+      
+      /***************************************** Get city data ************************************/
+      // The below line ensure you this only runs when the page is loaded. 
+     
+         function HealthCode(place) {
+           console.log(place);//outputing the  current passed value from the array you created
+        var image = 'https://cdn.glitch.com/b6c89e66-5ba7-4a49-b861-222bba725f27%2Fpinkrat.png?1545960867425'
+        var marker = new google.maps.Marker({
+            map: map,
+            position: new google.maps.LatLng(place[1],place[0]),// I changed this as you were referencing something that was not available. Instead, I am passing the values from your array for the location. This was in the previous class exercises. 
+            icon: image,
+            animation: google.maps.Animation.DROP,
+          
+           });
+         
+           //console.log(marker);
+         }
+         // The above exmaple can be copied and pasted to somehwere more useful in your code. I just stuck it here because there was space.
+        // you can also turn into a function. :)
+         
+         
+         
+      
+                           
+      /***************************************** Get city data ************************************/       
+          //I had to change how you made the call to google.  Everything still works the same.
+          google.maps.event.addDomListener(window, 'load', initMap);
+      
+        //$(window).load(dionMarker("blah")); 
+      //draw('map', mapOptions, positions); 
+    </script>
+    
+      
+ 
+    
+  </head>
+  <body>
+        <div id="map"></div>
+
+  <div id="content">
+   <h1>
+     Do you really want to eat there?
+    </h1>
+      <p class="avo">
+    "brunch has morphed into something more horrific: a millennial lifestyle" -nypost
+    </p>
+    <p class="rat">
+      "Because major violations only cost food facilities four points, a restaurant could have one or even two critical health problems and still retain an A grade." -San Gabriel Valley Tribune
+    </p>
+    <p class="avo">
+"Recently, plastic surgeon Simon Eccles said he treats about four patients a week for Avocado Hand. He even spoke of a ‘post-brunch rush’ on Saturdays." -DailyMail   </p>
+    <p class="rat">
+      "Getting a good rating doesn’t preclude serious violations that are either missed by a health inspector or that were not present when the health inspector was." -Reader's Digest
+    </p>
+    <p class="avo">
+      "Avocado toast will always be a diet essential." -Goop
+    </p>
+     </div> 
+    <div id="key">
+      <img src="https://cdn.glitch.com/b6c89e66-5ba7-4a49-b861-222bba725f27%2Fpinkrat.png?1545960867425"> health code violation
+ <br> <img src="https://cdn.glitch.com/b6c89e66-5ba7-4a49-b861-222bba725f27%2Favo.png?1545068252155"> avocado toast served
+    </div>
+
+  </body>
+</html>
