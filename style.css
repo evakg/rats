@@ -1,0 +1,130 @@
+/* CSS files add styling rules to your content */
+
+  #content {
+        height: 50%;
+        overflow:auto;
+      }
+      
+      #key{
+        font-family: sauna-new, sans-serif;
+        font-size: 1.5em;
+        position: absolute;
+        left: 5%;
+        width: 21%;
+        padding: 1%;
+        top:9%;
+        z-index: 1;
+      }
+      
+      #key img {
+        margin-right: 4%;
+        width: 30px;}
+        
+      p {
+       font-family: sauna-new, sans-serif;
+       font-size: 2em;
+      }
+      
+      #map {
+        height: 100%;
+        border-radius: 25px;
+        position: fixed;
+      }
+      
+      html, body {
+        height: 500px;
+        margin: 1%;
+        padding: 0;
+        background: #212121;
+        color: #757575;
+        font-family: blenny, sans-serif;
+        font-weight: 100;
+        font-style: normal;
+      }
+      
+      h1 {font-size: 5em;
+         color:#6b0f6d;
+        margin-top: 4%
+      }
+     /* .rat{
+       color:#6b0f6d;
+      }*/
+      
+      .avo {
+      color:#39b54a;
+      }
+
+
+@media all and (min-width:840px) and (max-width:1350px) {
+  #key{
+    width: 23%;
+    font-size: 1.2em;
+    top:5%;
+  }
+  h1 {font-size: 3em;
+  margin-bottom: 10%;
+  margin-top: 7%;}
+
+  
+  p  {font-size: 1.5em;}
+
+}
+
+@media all and (min-width:560px) and (max-width:839px) {
+  #key{
+    width: 30%;
+    font-size: 1em;
+    top:3%;
+  }
+  h1 {font-size: 2.1em;
+  margin-bottom: 15%;
+  margin-top: 10%;
+  }
+  p  {font-size: 1em;}
+}
+
+@media all and (min-width:350px) and (max-width:559px) {
+  #key{
+    width: 35%;
+    font-size: .8em;
+    top:3%;
+  }
+  #key img {
+        margin-right: 4%;
+        width: 20px;}
+  h1 {font-size: 1.5em;
+  margin-bottom: 15%;
+  margin-top: 15%;
+  }
+  p  {font-size: .5em;}
+
+ #content {
+        height: 30%;
+        overflow:auto;
+      }
+}
+
+@media all and (min-width:50px) and (max-width:349px) {
+  #key{
+    width: 35%;
+    font-size: .5em;
+    top:3%;
+  }
+  #key img {
+        margin-right: 4%;
+        width: 20px;}
+  h1 {font-size: 1.1em;
+  margin-bottom: 25%;
+  margin-top: 29%;
+  }
+  p  {font-size: .5em;}
+
+ #content {
+        height: 40%;
+        overflow:auto;
+      }
+  #map {
+        height: 70%;
+     
+      }
+}
